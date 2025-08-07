@@ -49,7 +49,7 @@ class AccountCreator:
             print("Página cargada exitosamente.")
         except Exception as e:
             print(f"Error al abrir la página: {e}")
-            self.quit_driver()
+            # self.quit_driver()
             raise
 
     def find_and_type(self, by_method, locator, text, element_name="campo"):
@@ -59,7 +59,7 @@ class AccountCreator:
             print(f"Ingresado '{text}' en el {element_name}.")
         except Exception as e:
             print(f"Error al encontrar o escribir en el {element_name} ('{locator}'): {e}")
-            self.quit_driver()
+            # self.quit_driver()
             raise
 
     def find_and_click(self, by_method, locator, element_name="botón"):
@@ -69,7 +69,7 @@ class AccountCreator:
             print(f"Clic en el {element_name}.")
         except Exception as e:
             print(f"Error al encontrar o hacer clic en el {element_name} ('{locator}'): {e}")
-            self.quit_driver()
+            # self.quit_driver()
             raise
 
     def find_element_and_wait(self, by_strategy, locator, timeout=10):

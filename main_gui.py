@@ -105,7 +105,6 @@ class AccountCreatorApp(tk.Tk):
         try:
             temp_df = pd.read_excel(filepath)
             
-            # CORRECCIÓN: Reemplazar valores NaN (Not a Number) por strings vacíos para una vista limpia
             self.dataframe = temp_df.fillna('')
 
             required_cols = ['Correo', 'Contrasena', 'Nombre', 'Genero', 'CodigoSeccion']
@@ -113,7 +112,7 @@ class AccountCreatorApp(tk.Tk):
                 messagebox.showerror("Error de Formato", f"El archivo Excel debe contener las columnas: {', '.join(required_cols)}")
                 return
 
-            # Añadir columnas de estado si no existen (ahora sobre el DataFrame limpio)
+            # Añadir columnas de estado si no existen
             if 'Status' not in self.dataframe.columns: self.dataframe['Status'] = ''
             if 'Mensaje' not in self.dataframe.columns: self.dataframe['Mensaje'] = ''
             
@@ -140,7 +139,6 @@ class AccountCreatorApp(tk.Tk):
             except:
                 pass # No falla si hay menos columnas
 
-    # --- El resto de las funciones de lógica no cambian ---
     def highlight_row(self, row_index, color_key):
         color_map = {
             "processing": COLORS["highlight_processing"],
@@ -260,7 +258,6 @@ class AccountCreatorApp(tk.Tk):
         self.start_button.config(state="normal")
         self.load_button.config(state="normal")
 
-# --- PUNTO DE ENTRADA DE LA APLICACIÓN ---
 if __name__ == "__main__":
     app = AccountCreatorApp()
     app.mainloop()

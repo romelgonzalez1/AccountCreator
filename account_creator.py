@@ -92,8 +92,6 @@ class AccountCreator:
         if not is_parent_checkbox.is_selected():
             print(f"Marcando el checkbox: {checkbox_locator[1]}")
             is_parent_checkbox.click()
-            # Opcional: una pequeña pausa para que el DOM se actualice si es necesario
-            # time.sleep(0.5)
         else:
             print(f"El checkbox {checkbox_locator[1]} ya está marcado.")
 

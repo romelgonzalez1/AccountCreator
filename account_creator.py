@@ -5,7 +5,8 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options
+# from webdriver_manager.chrome import ChromeDriverManager
 import time
 import config
 import config_extra
@@ -27,16 +28,19 @@ class AccountCreator:
             print(f"Fallo al iniciar sesión: {e}")
             self.driver.save_screenshot("error_login.png")
             return False
-    def __init__(self, headless=False):
-        options = webdriver.ChromeOptions()
+    def __init__(self, headless=False, driver_path="chromedriver.exe"):
+        chrome_options = Options()
+        chrome_options.page_load_strategy = 'eager'
         if headless:
-            options.add_argument("--headless") # Ejecutar el navegador sin interfaz gráfica
-            options.add_argument("--disable-gpu") # Necesario para headless en algunos sistemas
-        options.add_argument("--window-size=1920,1080") # Tamaño de ventana para evitar problemas de responsive
-        options.add_argument("--no-sandbox") # Necesario en algunos entornos Linux
-        options.add_argument("--disable-dev-shm-usage") # Para entornos Docker/Linux con espacio limitado
+            chrome_options.add_argument("--headless")
+            chrome_options.add_argument("--window-size=1920,1080")
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--disable-dev-shm-usage")
 
-        self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+        service = Service(executable_path=driver_path)
+        
+        self.driver = webdriver.Chrome(service=service, options=chrome_options)
+
         self.wait = WebDriverWait(self.driver, config.EXPLICIT_WAIT_TIME)
         self.driver.maximize_window() # Maximizar la ventana para asegurar visibilidad de elementos
         self.driver.implicitly_wait(5) # Espera implícita global para todos los find_element
